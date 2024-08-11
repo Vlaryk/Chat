@@ -1,4 +1,7 @@
-package server.client;
+package server.client.domain;
+
+import server.client.ui.ClientView;
+import server.server.domain.ServerController;
 
 /**
  * класс содержащий логику работы клиента
@@ -8,6 +11,7 @@ package server.client;
  */
 public class ClientController {
     private boolean connected;
+
     private String name;
     private ClientView clientView;
     private ServerController server;
@@ -29,12 +33,12 @@ public class ClientController {
     public boolean connectToServer(String name) {
         this.name = name;
         if (server.connectUser(this)){
-            showOnWindow("Вы успешно подключились!\n");
             connected = true;
             String log = server.getHistory();
             if (log != null){
                 showOnWindow(log);
             }
+            showOnWindow("Вы успешно подключились!\n");
             return true;
         } else {
             showOnWindow("Подключение не удалось");
@@ -75,7 +79,7 @@ public class ClientController {
     public void message(String text) {
         if (connected) {
             if (!text.isEmpty()) {
-                server.message(name + ": " + text);
+                server.showMessage(name + ": " + text);
             }
         } else {
             showOnWindow("Нет подключения к серверу");
@@ -88,5 +92,9 @@ public class ClientController {
      */
     private void showOnWindow(String text) {
         clientView.showMessage(text);
+    }
+
+    public String getName() {
+        return name;
     }
 }

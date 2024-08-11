@@ -1,17 +1,16 @@
 package server;
 
-import server.client.ClientController;
-import server.client.ClientGUI;
-import server.server.ServerWindow;
+import server.client.domain.ClientController;
+import server.client.ui.ClientGUI;
+import server.server.domain.ServerController;
+import server.server.repository.Log;
+import server.server.ui.ServerWindow;
 
 public class Main {
     public static void main(String[] args) {
 
         //создание объектов сервера и создание связи между ними
-        ServerWindow serverWindow = new ServerWindow();
-        ServerController serverController = new ServerController();
-        serverController.setServerView(serverWindow);
-        serverWindow.setServerController(serverController);
+        ServerController serverController = new ServerController(new ServerWindow(),new Log());
 
         //создание объектов клиента1 и создание связи между ними
         ClientGUI clientGUI1 = new ClientGUI();
